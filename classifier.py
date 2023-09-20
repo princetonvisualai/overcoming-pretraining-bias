@@ -1026,6 +1026,11 @@ def main():
     if args.hp_search:
         assert 'random' not in args.load_weights, 'just say scratch not random for load_weights when doing hp search'
         ray.init(num_cpus=16, num_gpus=4)
+        config = {
+                "lr": tune.grid_search([.1, .05, .01, .005, .001]),
+                "wd": tune.grid_search([.0, .0001, .0005, .001]),
+                'args': args
+            }
         scheduler = ASHAScheduler(
             metric="val_loss",
             mode="min",
