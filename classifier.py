@@ -440,6 +440,8 @@ def get_model(args, out_features):
         else:
             model = models.swin_s(weights=None) # TODO: do I want to do other sizes of swin?
         model.head = nn.Sequential(nn.Linear(768, out_features), nn.Sigmoid())
+    else:
+        assert False, "Please specify a valid model_type as an args"
 
     if 'pretrain' in args.load_weights:
 
